@@ -16,7 +16,17 @@
       "Bash(npm run dev:*)",
       "Bash(node:*)",
       "Bash(rm:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(ls:*)",
+      "Bash(echo:*)",
+      "mcp__ide__executeCode",
+      "Bash(npm run test:*)",
+      "Bash(export N8N_API_URL=\"http://localhost:5678/api/v1\")",
+      "Bash(export:*)",
+      "Bash(/Users/honsako/.nodebrew/current/bin/node dist/mcp/index.js)",
+      "Bash(MCP_MODE=stdio LOG_LEVEL=error DISABLE_CONSOLE_OUTPUT=true node dist/mcp/index.js --version)"
     ],
     "deny": []
   }

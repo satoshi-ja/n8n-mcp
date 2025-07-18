@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "file",
+        "binaryPropertyName": "data",
+        "channelId": {
+          "__rl": true,
+          "value": "C096CHYL9U2",
+          "mode": "list",
+          "cachedResultName": "tam-and-co"
+        },
+        "options": {}
+      },
+      "id": "1e8ac8a0-a35d-4d11-a928-9fccc298240c",
+      "name": "写真アップロード",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1200, 200],
+      "webhookId": "7b2b340e-8f53-4921-971e-58294e48409b",
+      "credentials": {
+        "slackApi": {
+          "id": "KPwDtPWTKcT5zXAo",
+          "name": "Slack account tam-and-co"
+        }
+      },
+      "continueOnFail": true
+    }
+  ]
+} 

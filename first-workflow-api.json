@@ -1,0 +1,68 @@
+{
+  "name": "毎朝の天気予報通知",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "毎朝8時に実行",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 今日の日付を取得\nconst today = new Date();\nconst options = { \n  year: 'numeric', \n  month: 'long', \n  day: 'numeric',\n  weekday: 'long'\n};\nconst dateJa = today.toLocaleDateString('ja-JP', options);\n\n// 出力\nreturn [{\n  json: {\n    date: dateJa,\n    timestamp: today.toISOString(),\n    message: `おはようございます！今日は${dateJa}です。`\n  }\n}];"
+      },
+      "id": "get-date",
+      "name": "今日の日付を取得",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://weather.tsukumijima.net/api/forecast/city/130010",
+        "options": {}
+      },
+      "id": "weather-api",
+      "name": "東京の天気を取得",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 天気データを整形\nconst weatherData = $input.item.json;\nconst today = weatherData.forecasts[0];\nconst tomorrow = weatherData.forecasts[1];\n\n// メッセージを作成\nconst message = `\n📅 ${$('get-date').item.json.date}\n\n🌤️ **今日の天気（${weatherData.location.city}）**\n${today.telop}\n最高気温: ${today.temperature.max?.celsius || '---'}℃\n最低気温: ${today.temperature.min?.celsius || '---'}℃\n\n☔ **明日の天気**\n${tomorrow.telop}\n最高気温: ${tomorrow.temperature.max?.celsius || '---'}℃\n最低気温: ${tomorrow.temperature.min?.celsius || '---'}℃\n\n詳細: ${weatherData.link}\n`;\n\nreturn [{\n  json: {\n    message: message,\n    weatherData: weatherData\n  }\n}];"
+      },
+      "id": "format-message",
+      "name": "メッセージを整形",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "毎朝8時に実行": {
+      "main": [[{"node": "今日の日付を取得", "type": "main", "index": 0}]]
+    },
+    "今日の日付を取得": {
+      "main": [[{"node": "東京の天気を取得", "type": "main", "index": 0}]]
+    },
+    "東京の天気を取得": {
+      "main": [[{"node": "メッセージを整形", "type": "main", "index": 0}]]
+    }
+  },
+  "active": false,
+  "settings": {}
+}
+EOF < /dev/null
