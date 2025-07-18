@@ -19,6 +19,10 @@ services:
       - NODE_ENV=production
       - WEBHOOK_URL=http://localhost:5678/
       - GENERIC_TIMEZONE=Asia/Tokyo
+      - N8N_API_DISABLED=false
+      - N8N_PUBLIC_API_DISABLED=false
+      - N8N_PUBLIC_API_ENDPOINT_DISABLED=false
+      - N8N_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmNDRiYzk2Zi1hODUxLTQwNjYtOTMyYy0xMjc1ZjgxYTc2YWEiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzUyODI0NjYwLCJleHAiOjE3NjA1ODcyMDB9.TIypgAhLqh6YvtcCgKJYe1skuzwcS_8i_RQP-Lkx1wE
     volumes:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files
